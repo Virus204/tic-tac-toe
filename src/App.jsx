@@ -2,11 +2,19 @@ import { useState } from "react";
 
 function App() {
   const [squares, setSquares] = useState(Array(9).fill(null))
+  const [xIsNext, setXIsNext] = useState(true)
   const handleClick = (i) => {
-    const nextSquare = squares.slice()
-    nextSquare[i]="X"
-    setSquares(nextSquare)
-    console.log(squares)
+    if(squares[i]){
+      return;
+    }
+    const nextSquares = squares.slice()
+    if (xIsNext) {
+      nextSquares[i]="X"
+    }else {
+      nextSquares[i]="O"
+    }
+    setSquares(nextSquares)
+    setXIsNext(!xIsNext)
   }
   return (
     <>
@@ -25,6 +33,7 @@ function App() {
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
+      {console.log(squares)}
     </>
   )
 }
@@ -33,6 +42,4 @@ const Square = ({onSquareClick, value}) =>{
     <button className="square" onClick={onSquareClick}>{value}</button>
   )
 }
-
-
 export default App
